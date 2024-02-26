@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>knop 1</button>
+    <button>knop 2</button>
+    <button>knop 3</button>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let $button = $('button');
+            $button.click(function () {
+                console.log($('button').text());
+                console.log($(this).text());
+            })
+
+            $button.mouseover(function () {
+                $(this).css('color', '#ffffff');
+            });
+            $button.mouseout(function () {
+                $(this).css('color', '#000000');
+            });
+
+
+        });
+    </script>
+</body>
+
+</html>
