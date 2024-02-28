@@ -37,25 +37,38 @@
                 $(this).removeClass('kader');
             });
 
-            let 
-                    case "37":
-            return "links";
-                    case "38":
-            return "omhoog";
-                    case "39":
-            return "rechts";
-                    case "40":
-            return "omlaag";
-                    default:
-            return "onbekend";
-        }
-            });
-
-        $('#key').text('Ingedrukte toetsen: ' + keyNames.join(', '));
-        }
-
 
         });
+        let gedruktetoets = [];
+
+        function toetsen() {
+            let key = document.getElementById('key');
+            key.innerHTML = gedruktetoets.join('<br>');
+        }
+
+        function gedruktetoetsen(e) {
+            let toetscode = e.which || e.keyCode;
+            if (toetscode >= 37 && toetscode <= 40) {
+                switch (toetscode) {
+                    case 37:
+                        gedruktetoets.push('Keylinks');
+                        break;
+                    case 38:
+                        gedruktetoets.push('Keyomhoog');
+                        break;
+                    case 39:
+                        gedruktetoets.push('Keyrechts');
+                        break;
+                    case 40:
+                        gedruktetoets.push('Keyomlaag');
+                        break;
+                }
+
+                toetsen();
+            }
+        }
+
+        document.addEventListener('keydown', gedruktetoetsen);
     </script>
 </body>
 
