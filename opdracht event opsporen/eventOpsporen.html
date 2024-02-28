@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .random-div {
+            margin: 10px;
+            padding: 12px;
+            border: 2px solid #666;
+            width: 60px;
+            cursor: pointer;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .red {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="random-div blue">blauw</div>
+    <div class="random-div green">groen</div>
+    <div class="random-div red">rood</div>
+
+    <script src=" https://code.jquery.com/jquery-3.7.1.min.js">
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.random-div').on('click', function (event) {
+                console.log("Type: " + event.type);
+                console.log("Target: " + event.target);
+                console.log("Target Inner HTML: " + event.target.innerHTML);
+            });
+
+            $('.random-div').on('mouseenter', function () {
+                $(this).css('width', '100px');
+            });
+
+            $('.random-div').on('mouseleave', function () {
+                $(this).css('width', '60px');
+            });
+        });
+    </script>
+</body>
+
+</html>

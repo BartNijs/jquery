@@ -10,13 +10,16 @@
 <body>
 
 
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(document).ready(function () {
+            $(document).on('click', function (event) {
+                console.log("U hebt geklikt op x : " + event.pageX + " en y : " + event.pageY);
+            });
 
         });
     </script>
-
 
 </body>
 

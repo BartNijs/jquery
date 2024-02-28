@@ -8,16 +8,16 @@
 </head>
 
 <body>
-
-
+    <p>Als je op deze paragraaf klikt zal een log te voorschijn komen in de console.</p>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(document).ready(function () {
+            $('p').click(function () {
+                console.log('click op een paragraaf');
+            });
 
         });
     </script>
-
-
 </body>
 
 </html>

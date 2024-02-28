@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .kader {
+            border: 9px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <div>
+            <label for="naam">Naam</label><br>
+            <input type="text" id="naam" name="naam">
+        </div>
+        <div>
+            <label for="achternaam">Achternaam</label><br>
+            <input type="text" id="achternaam" name="achternaam">
+        </div>
+    </form>
+
+    <div id="key"></div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('input').focus(function () {
+                $(this).addClass('kader');
+            });
+
+            $('input').blur(function () {
+                $(this).removeClass('kader');
+            });
+
+            let 
+                    case "37":
+            return "links";
+                    case "38":
+            return "omhoog";
+                    case "39":
+            return "rechts";
+                    case "40":
+            return "omlaag";
+                    default:
+            return "onbekend";
+        }
+            });
+
+        $('#key').text('Ingedrukte toetsen: ' + keyNames.join(', '));
+        }
+
+
+        });
+    </script>
+</body>
+
+</html>
