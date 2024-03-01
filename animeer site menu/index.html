@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu en Inhoud</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="menu" id="menu">
+            <ul>
+                <li class="activated"><a href="#">Menu 1</a></li>
+                <li class="disactivated"><a href="#">Menu 2</a></li>
+                <li class="disactivated"><a href="#">Menu 3</a></li>
+            </ul>
+        </div>
+        <div class="inhoud" id="inhoud">
+            <div class="content">Inhoud 1</div>
+            <div class="content">Inhoud 2</div>
+            <div class="content">Inhoud 3</div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".container").fadeIn();
+
+            $(".menu").css("left", "-180px");
+
+            $(".menu ul li").on("click", function () {
+                $(".menu ul li").removeClass("activated").addClass("disactivated");
+                $(this).removeClass("disactivated").addClass("activated");
+
+                var index = $(this).index();
+                $(".inhoud .content").slideUp();
+                $(".inhoud .content").eq(index).slideDown();
+            });
+
+            $(".menu ul li a").hover(
+                function () {
+                    $(this).stop().animate({
+                        marginLeft: '20px'
+                    }, 'fast');
+                },
+                function () {
+                    $(this).stop().animate({
+                        marginLeft: '0px'
+                    }, 'fast');
+                }
+            );
+        });
+    </script>
+</body>
+
+</html>
