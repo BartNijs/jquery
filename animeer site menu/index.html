@@ -1,58 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu en Inhoud</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Menu met jQuery</title>
+    <style>
+        #container {
+            display: none;
+            position: relative;
+        }
+
+        #menu {
+            width: 150px;
+            left: -180px;
+            position: absolute;
+            z-index: 100;
+            transition: left 0.5s ease;
+        }
+
+        #menu ul li {
+            margin-bottom: 1px;
+            position: relative;
+            float: left;
+        }
+
+        #menu ul#unordereList li a {
+            width: 150px;
+            height: 22px;
+            background-color: #00293E;
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            padding: 7px 10px 0 0;
+            text-align: right;
+            font-weight: bold;
+            cursor: pointer;
+            cursor: hand;
+            position: relative;
+        }
+
+        #menu ul#unordereList li a .menu-label {
+            display: none;
+            color: #ffffff;
+            font-size: 12px;
+            position: absolute;
+            left: 150px;
+            top: 0;
+            padding-left: 10px;
+        }
+
+        #inhoud {
+            left: 50px;
+            position: absolute;
+            width: 500px;
+        }
+
+        .content {
+            display: none;
+            padding: 10px;
+            background-color: #f0f0f0;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .activated {
+            color: #ff0000;
+        }
+
+        .disactivated {
+            color: #ffffff;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="menu" id="menu">
-            <ul>
-                <li class="activated"><a href="#">Menu 1</a></li>
-                <li class="disactivated"><a href="#">Menu 2</a></li>
-                <li class="disactivated"><a href="#">Menu 3</a></li>
+
+    <div id="container">
+        <!-- Menu -->
+        <div id="menu">
+            <ul id="unordereList">
+                <li><a class="activated" href="#" data-index="0"><span>1</span><span
+                            class="menu-label">Menu</span><span></span></a></li>
+                <li><a class="disactivated" href="#" data-index="1"><span>2</span><span
+                            class="menu-label">Menu</span><span></span></a>
+                </li>
+                <li><a class="disactivated" href="#" data-index="2"><span>3</span><span
+                            class="menu-label">Menu</span><span></span></a></li>
+                <li><a class="disactivated" href="#" data-index="3"><span>4</span><span
+                            class="menu-label">Menu</span><span></span></a>
+                </li>
+                <li><a class="disactivated" href="#" data-index="4"><span>5</span><span
+                            class="menu-label">Menu</span><span></span></a>
+                </li>
+                <li><a class="disactivated" href="#" data-index="5"><span>6</span><span
+                            class="menu-label">Menu</span><span></span></a></li>
             </ul>
         </div>
-        <div class="inhoud" id="inhoud">
-            <div class="content">Inhoud 1</div>
-            <div class="content">Inhoud 2</div>
-            <div class="content">Inhoud 3</div>
+
+        <div id="inhoud">
+            <div class="content" data-index="0">
+                <h2>Inhoud 1</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec nulla sed elit sodales cursus sit
+                    amet ac felis. Vestibulum lacinia ipsum et mi luctus bibendum.</p>
+            </div>
+            <div class="content" data-index="1">
+                <h2>Inhoud 2</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec nulla sed elit sodales cursus sit
+                    amet ac felis. Vestibulum lacinia ipsum et mi luctus bibendum.</p>
+            </div>
+            <div class="content" data-index="2">
+                <h2>Inhoud 3</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec nulla sed elit sodales cursus sit
+                    amet ac felis. Vestibulum lacinia ipsum et mi luctus bibendum.</p>
+            </div>
+            <div class="content" data-index="3">
+                <h2>Inhoud 4</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec nulla sed elit sodales cursus sit
+                    amet ac felis. Vestibulum lacinia ipsum et mi luctus bibendum.</p>
+            </div>
+            <div class="content" data-index="4">
+                <h2>Inhoud 5</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec nulla sed elit sodales cursus sit
+                    amet ac felis. Vestibulum lacinia ipsum et mi luctus bibendum.</p>
+            </div>
+            <div class="content" data-index="5">
+                <h2>Inhoud 6</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec nulla sed elit sodales cursus sit
+                    amet ac felis. Vestibulum lacinia ipsum et mi luctus bibendum.</p>
+            </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            $(".container").fadeIn();
 
-            $(".menu").css("left", "-180px");
+            $("#container").fadeIn();
 
-            $(".menu ul li").on("click", function () {
-                $(".menu ul li").removeClass("activated").addClass("disactivated");
-                $(this).removeClass("disactivated").addClass("activated");
-
-                var index = $(this).index();
-                $(".inhoud .content").slideUp();
-                $(".inhoud .content").eq(index).slideDown();
+            $("#unordereList li a").hover(function () {
+                $(this).find(".menu-label").show();
+                $(this).animate({ "padding-right": "75px" }, "fast");
+            }, function () {
+                $(this).find(".menu-label").hide();
+                $(this).animate({ "padding-right": "5px" }, "fast");
             });
 
-            $(".menu ul li a").hover(
-                function () {
-                    $(this).stop().animate({
-                        marginLeft: '20px'
-                    }, 'fast');
-                },
-                function () {
-                    $(this).stop().animate({
-                        marginLeft: '0px'
-                    }, 'fast');
-                }
-            );
+            $("#unordereList li a").click(function (e) {
+                e.preventDefault();
+                let index = $(this).data("index");
+
+                $("#unordereList li a").removeClass("activated").addClass("disactivated");
+                $(this).removeClass("disactivated").addClass("activated");
+
+                $(".content").slideUp();
+                $(".content").eq(index).slideDown();
+            });
         });
     </script>
+
 </body>
 
 </html>
