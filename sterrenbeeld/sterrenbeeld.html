@@ -5,25 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sterrenbeeld bepaling</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
-        /* Stijl voor tooltip */
         .tooltip {
             position: relative;
             display: inline-block;
-
         }
-
 
         .tooltip:hover .tooltiptext {
             visibility: visible;
             opacity: 1;
         }
 
-        /* Stijl voor foutmelding */
         .error {
             color: red;
             font-size: 0.8em;
+        }
+
+        #berekenButton {
+            background-color: rgb(107, 159, 161);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #sterrenbeeldAfbeelding {
+            display: none;
+            max-width: 200px;
+            height: auto;
+        }
+
+        #geboortedag,
+        #geboortemaand {
+            width: 25%;
         }
     </style>
 </head>
@@ -31,19 +46,16 @@
 <body>
     <h2>Vul uw geboortedag en -maand in om uw sterrenbeeld te vinden:</h2>
     <form id="sterrenbeeldForm">
-        <label for="geboortedag" class="tooltip">Geboortedag:
-
-        </label>
-        <input type="number" id="geboortedag" name="geboortedag" min="1" max="31" placeholder="Voorbeeld: 25" required>
+        <label for="geboortedag" class="tooltip">Geboortedag:</label>
+        <input type="text" id="geboortedag" name="geboortedag" min="1" max="31" placeholder="Voorbeeld: 25" required>
         <span id="geboortedagError" class="error"></span>
         <br><br>
-        <label for="geboortemaand" class="tooltip">Geboortemaand:
-        </label>
-        <input type="number" id="geboortemaand" name="geboortemaand" min="1" max="12"
-            placeholder="Vul het maandnummer in" required>
+        <label for="geboortemaand" class="tooltip">Geboortemaand:</label>
+        <input type="text" id="geboortemaand" name="geboortemaand" min="1" max="12" placeholder="Vul het maandnummer in"
+            required>
         <span id="geboortemaandError" class="error"></span>
         <br><br>
-        <button type="submit" id="berekenButton" disabled>Bepaal Sterrenbeeld</button>
+        <button type="button" id="berekenButton" disabled>Bepaal Sterrenbeeld</button>
     </form>
 
     <div id="sterrenbeeldOutput">
@@ -56,16 +68,16 @@
             let dagOk = false;
             let maandOk = false;
 
-            const geboortedagInput = $("#geboortedag");
-            const geboortedagError = $("#geboortedagError");
-            const geboortemaandInput = $("#geboortemaand");
-            const geboortemaandError = $("#geboortemaandError");
-            const berekenButton = $("#berekenButton");
-            const sterrenbeeldTekst = $("#sterrenbeeldTekst");
-            const sterrenbeeldAfbeelding = $("#sterrenbeeldAfbeelding");
+            let geboortedagInput = $("#geboortedag");
+            let geboortedagError = $("#geboortedagError");
+            let geboortemaandInput = $("#geboortemaand");
+            let geboortemaandError = $("#geboortemaandError");
+            let berekenButton = $("#berekenButton");
+            let sterrenbeeldTekst = $("#sterrenbeeldTekst");
+            let sterrenbeeldAfbeelding = $("#sterrenbeeldAfbeelding");
 
             geboortedagInput.on("blur", function () {
-                const value = parseInt($(this).val());
+                let value = parseInt($(this).val());
                 if (isNaN(value) || value < 1 || value > 31) {
                     geboortedagError.text("Ongeldige dag");
                     dagOk = false;
@@ -77,7 +89,7 @@
             });
 
             geboortemaandInput.on("blur", function () {
-                const value = parseInt($(this).val());
+                let value = parseInt($(this).val());
                 if (isNaN(value) || value < 1 || value > 12) {
                     geboortemaandError.text("Ongeldige maand");
                     maandOk = false;
@@ -89,54 +101,74 @@
             });
 
             function checkAllesIngevuld() {
+                if (!geboortedagInput.val()) {
+                    geboortedagError.text("Vul uw geboortedag in");
+                    dagOk = false;
+                } else {
+                    geboortedagError.text("");
+                }
+
+                if (!geboortemaandInput.val()) {
+                    geboortemaandError.text("Vul uw geboortemaand in");
+                    maandOk = false;
+                } else {
+                    geboortemaandError.text("");
+                }
+
                 berekenButton.prop("disabled", !(dagOk && maandOk));
             }
 
-            $("#sterrenbeeldForm").on("submit", function (event) {
-                event.preventDefault();
-                const dag = parseInt(geboortedagInput.val());
-                const maand = parseInt(geboortemaandInput.val());
-                let sterrenbeeld = "";
-                switch (true) {
-                    case (maand == 1 && dag >= 1 && dag <= 19) || (maand == 12 && dag >= 21):
-                        sterrenbeeld = "Steenbok";
-                        break;
-                    case (maand == 1 && dag >= 20) || (maand == 2 && dag <= 18):
-                        sterrenbeeld = "Waterman";
-                        break;
-                    case (maand == 2 && dag >= 19) || (maand == 3 && dag <= 20):
-                        sterrenbeeld = "Vissen";
-                        break;
-                    case (maand == 3 && dag >= 21) || (maand == 4 && dag <= 20):
-                        sterrenbeeld = "Ram";
-                        break;
-                    case (maand == 4 && dag >= 21) || (maand == 5 && dag <= 21):
-                        sterrenbeeld = "Stier";
-                        break;
-                    case (maand == 5 && dag >= 22) || (maand == 6 && dag <= 21):
-                        sterrenbeeld = "Tweelingen";
-                        break;
-                    case (maand == 6 && dag >= 22) || (maand == 7 && dag <= 22):
-                        sterrenbeeld = "Kreeft";
-                        break;
-                    case (maand == 7 && dag >= 23) || (maand == 8 && dag <= 22):
-                        sterrenbeeld = "Leeuw";
-                        break;
-                    case (maand == 8 && dag >= 23) || (maand == 9 && dag <= 22):
-                        sterrenbeeld = "Maagd";
-                        break;
-                    case (maand == 9 && dag >= 23) || (maand == 10 && dag <= 22):
-                        sterrenbeeld = "Weegschaal";
-                        break;
-                    case (maand == 10 && dag >= 23) || (maand == 11 && dag <= 22):
-                        sterrenbeeld = "Schorpioen";
-                        break;
-                    case (maand == 11 && dag >= 23) || (maand == 12 && dag <= 20):
-                        sterrenbeeld = "Boogschutter";
-                        break;
+            berekenButton.on("click", function () {
+                checkAllesIngevuld();
+                if (dagOk && maandOk) {
+                    let dag = parseInt(geboortedagInput.val());
+                    let maand = parseInt(geboortemaandInput.val());
+                    let sterrenbeeld = "";
+                    switch (true) {
+                        case (maand == 1 && dag >= 1 && dag <= 19) || (maand == 12 && dag >= 21):
+                            sterrenbeeld = "Steenbok";
+                            break;
+                        case (maand == 1 && dag >= 20) || (maand == 2 && dag <= 18):
+                            sterrenbeeld = "Waterman";
+                            break;
+                        case (maand == 2 && dag >= 19) || (maand == 3 && dag <= 20):
+                            sterrenbeeld = "Vissen";
+                            break;
+                        case (maand == 3 && dag >= 21) || (maand == 4 && dag <= 20):
+                            sterrenbeeld = "Ram";
+                            break;
+                        case (maand == 4 && dag >= 21) || (maand == 5 && dag <= 21):
+                            sterrenbeeld = "Stier";
+                            break;
+                        case (maand == 5 && dag >= 22) || (maand == 6 && dag <= 21):
+                            sterrenbeeld = "Tweelingen";
+                            break;
+                        case (maand == 6 && dag >= 22) || (maand == 7 && dag <= 22):
+                            sterrenbeeld = "Kreeft";
+                            break;
+                        case (maand == 7 && dag >= 23) || (maand == 8 && dag <= 22):
+                            sterrenbeeld = "Leeuw";
+                            break;
+                        case (maand == 8 && dag >= 23) || (maand == 9 && dag <= 22):
+                            sterrenbeeld = "Maagd";
+                            break;
+                        case (maand == 9 && dag >= 23) || (maand == 10 && dag <= 22):
+                            sterrenbeeld = "Weegschaal";
+                            break;
+                        case (maand == 10 && dag >= 23) || (maand == 11 && dag <= 22):
+                            sterrenbeeld = "Schorpioen";
+                            break;
+                        case (maand == 11 && dag >= 23) || (maand == 12 && dag <= 20):
+                            sterrenbeeld = "Boogschutter";
+                            break;
+                        default:
+                            sterrenbeeld = "Steenbok";
+                            break;
+                    }
+                    sterrenbeeldTekst.text("Uw sterrenbeeld is: " + sterrenbeeld);
+                    sterrenbeeldAfbeelding.attr("src", sterrenbeeld.toLowerCase() + ".jpeg");
+                    sterrenbeeldAfbeelding.show();
                 }
-                sterrenbeeldTekst.text("Uw sterrenbeeld is: " + sterrenbeeld);
-                sterrenbeeldAfbeelding.attr("src", sterrenbeeld.toLowerCase() + ".jpeg");
             });
         });
     </script>
